@@ -6,6 +6,9 @@ pipeline {
 	options {
         ansiColor('xterm')
     }
+	tools { 
+        maven 'maven' 
+    }
 	environment { 
 		LANG="en_US.UTF-8"
 		MAVEN_OPTS="-Dfile.encoding=utf-8"
