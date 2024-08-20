@@ -15,16 +15,16 @@ pipeline {
 			steps {
 				script { 
 					if (branch == 'master'){
-						sh """
+						sh '''
 							export PRO_VERSION1=`mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout`
 							mvn versions:set -DnewVersion=${PRO_VERSION1}-${BUILD_ID} -s settings.xml
-						"""
+						'''
 					} else {
-						sh """
+						sh '''
 							export PRO_VERSION1=`mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout`
 							mvn versions:set -DnewVersion=${PRO_VERSION1}-SNAPSHOT -s settings.xml
 							cat pom.xml
-						"""
+						'''
 					}
 				}
 			}
