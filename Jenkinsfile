@@ -8,6 +8,7 @@ pipeline {
     }
 	environment { 
 		LANG="en_US.UTF-8"
+		MAVEN_OPTS="-Dfile.encoding=utf-8"
     }
     stages {
 		stage ('Update POM') {
@@ -17,7 +18,7 @@ pipeline {
 						sh '''
 							export PRO_VERSION=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout)
 							export defined_pro_ver="1.0"
-							mvn versions:set -DnewVersion="${defined_pro_ver}"-${BUILD_ID} -s settings.xml
+							mvn versions:set -DnewVersion="${PRO_VERSION}"-${BUILD_ID} -s settings.xml
 						'''
 					} else {
 						sh '''
