@@ -16,6 +16,7 @@ pipeline {
 				script { 
 					if (branch == 'master'){
 						sh '''
+							env
 							export PRO_VERSION=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout)
 							export defined_pro_ver="1.0"
 							mvn versions:set -DnewVersion="${PRO_VERSION}"-${BUILD_ID} -s settings.xml
