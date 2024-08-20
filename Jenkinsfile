@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 def BranchList = ["master", "dev", "stage"]
 def branch = "${env.BRANCH_NAME}"
-def PRO_VERSION = "1.0"
+// def PRO_VERSION = "1.0"
 pipeline {
 	agent any
 	options {
@@ -12,18 +12,19 @@ pipeline {
 			steps {
 				script { 
 					if (branch == 'master'){
-						sh """
+						sh "
 							export LANG=en_US.UTF-8
-							PRO_VERSION1=`mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout`
-							mvn versions:set -DnewVersion=${PRO_VERSION}-${BUILD_ID} -s settings.xml
-						"""
+							export PRO_VERSION1=`mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout`
+							env
+							mvn versions:set -DnewVersion=${PRO_VERSION1}-${BUILD_ID} -s settings.xml
+						"
 					} else {
-						sh """
+						sh "
 							export LANG=en_US.UTF-8
-							PRO_VERSION1=`mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout`
-							mvn versions:set -DnewVersion=${PRO_VERSION}-SNAPSHOT -s settings.xml
+							export PRO_VERSION1=`mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout`
+							mvn versions:set -DnewVersion=${PRO_VERSION1}-SNAPSHOT -s settings.xml
 							cat pom.xml
-						"""
+						"
 					}
 				}
 			}
