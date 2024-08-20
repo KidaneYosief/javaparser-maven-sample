@@ -8,7 +8,7 @@ pipeline {
         ansiColor('xterm')
     }
 	environment { 
-		LANG=en_US.UTF-8
+		LANG="en_US.UTF-8"
     }
     stages {
 		stage ('Update POM') {
